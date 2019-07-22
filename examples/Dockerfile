@@ -23,7 +23,7 @@ RUN set -xe \
     && apt-get clean \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* \
-    && pip3 install --no-cache-dir python-socketio eventlet \# mysql-replication
+    && pip3 install --no-cache-dir python-socketio eventlet \
     && git clone https://github.com/howmp/python-mysql-replication \
     && cd python-mysql-replication \
     && python setup.py install
