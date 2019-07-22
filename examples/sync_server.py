@@ -11,10 +11,12 @@ app = socketio.WSGIApp(sio)
 def _query(sid, sql):
     print(GREEN + sql + END)
     conn = pymysql.connect(**MYSQL_SETTINGS)
-    c = conn.cursor(pymysql.cursors.DictCursor)
-    c.execute(sql)
+    cur = conn.cursor(pymysql.cursors.DictCursor)
+    cur.execute(sql)
+    rows = cur.fetchall()
+    cur.close()
     conn.close()
-    return c.fetchall()
+    return rows
 
 @sio.event
 def _enter_room(sid, room_name):
@@ -29,7 +31,7 @@ from pymysqlreplication.row_event import WriteRowsEvent, UpdateRowsEvent, Delete
 MYSQL_SETTINGS = {
     'host': getenv('MYSQL_HOST', '127.0.0.1'),
     'port': getenv('MYSQL_PORT', 3306),
-    'user': 'root',
+    'user': getenv('MYSQL_ROOT_USER', 'root'),
     'passwd': getenv('MYSQL_ROOT_PASSWORD', ''),
     'database': getenv('MYSQL_DATABASE'),
     'charset': 'utf8mb4',
