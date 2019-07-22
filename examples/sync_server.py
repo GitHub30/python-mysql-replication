@@ -1,4 +1,5 @@
 import eventlet
+# https://github.com/miguelgrinberg/python-socketio/issues/16
 eventlet.monkey_patch()
 import socketio
 import threading
