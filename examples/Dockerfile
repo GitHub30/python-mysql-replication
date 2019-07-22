@@ -18,13 +18,20 @@ ADD https://gist.githubusercontent.com/GitHub30/ba72f572477144a2e05f55f499c62861
 # https://stackoverflow.com/questions/40184788/protocol-not-found-socket-getprotobyname
 RUN set -xe \
     && apt-get update \
-    && apt-get install -y python3-pip nano git wget curl procps \
+    && apt-get install -y python3-pip git \
     && apt-get -o Dpkg::Options::="--force-confmiss" install --reinstall netbase \
-    && pip3 install mysql-replication python-socketio eventlet
+    && apt-get clean \
+    && apt-get autoclean \
+    && rm -rf /var/lib/apt/lists/* \
+    && pip3 install --no-cache-dir python-socketio eventlet \# mysql-replication
+    && git clone https://github.com/howmp/python-mysql-replication \
+    && cd python-mysql-replication \
+    && python setup.py install
 
 RUN set -xe \
     && cd \
-    && git clone https://github.com/GitHub30/python-mysql-replication
+    && git clone https://github.com/GitHub30/python-mysql-replication ~/firesql \
+    && cd ~/firesql/examples
 
 # https://github.com/noplay/python-mysql-replication/pull/273/files
 # nano /usr/local/lib/python3.5/dist-packages/pymysqlreplication/packet.py
