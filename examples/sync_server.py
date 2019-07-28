@@ -31,7 +31,7 @@ from pymysqlreplication.row_event import WriteRowsEvent, UpdateRowsEvent, Delete
 
 MYSQL_SETTINGS = {
     'host': getenv('MYSQL_HOST', '127.0.0.1'),
-    'port': getenv('MYSQL_PORT', 3306),
+    'port': 3306,
     'user': getenv('MYSQL_ROOT_USER', 'root'),
     'passwd': getenv('MYSQL_ROOT_PASSWORD', ''),
     'database': getenv('MYSQL_DATABASE'),
